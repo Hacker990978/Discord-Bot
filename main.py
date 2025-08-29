@@ -169,6 +169,36 @@ bot.tree.add_command(tools_group, guild=discord.Object(id=GUILD_ID))
 bot.tree.add_command(games_group, guild=discord.Object(id=GUILD_ID))
 bot.tree.add_command(admin_group, guild=discord.Object(id=GUILD_ID))
 
+import discord
+from discord import app_commands
+from mcstatus import MinecraftServer
+
+intents = discord.Intents.default()
+bot = discord.Client(intents=intents)
+tree = app_commands.CommandTree(bot)
+
+# Replace with your Minecraft server address (can be IP or domain)
+SERVER_IP = "play.battlepie.net"
+
+@tree.command(name="mcstatus", description="Check Minecraft server status")
+async def mcstatus(interaction: discord.Interaction):
+    try:
+        server = MinecraftServer.lookup(SERVER_IP)
+        status = server.status()
+        await interaction.response.send_message(
+            f"✅ **{SERVER_IP}** is online!\n"
+            f"Players: {status.players.online}/{status.players.max}\n"
+            f"Latency: {status.latency} ms"
+        )
+    except Exception as e:
+        await interaction.response.send_message(f"❌ {SERVER_IP} is offline or unreachable.")
+
+@bot.event
+async def on_ready():
+    await tree.sync()  # Sync slash commands with Discord
+    print(f"✅ Logged in as {bot.user}")
+
+bot.run("YOUR_BOT_TOKEN")
 # ==============================
 # Run Bot
 # ==============================
