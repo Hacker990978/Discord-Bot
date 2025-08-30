@@ -198,7 +198,6 @@ async def on_ready():
     await tree.sync()  # Sync slash commands with Discord
     print(f"✅ Logged in as {bot.user}")
 
-bot.run("YOUR_BOT_TOKEN")
 # ==============================
 # Run Bot
 # ==============================
