@@ -1,3 +1,4 @@
 discord.py
 flask
-mcstatus==6.7.0
+mcstatus==5.6.0
+
