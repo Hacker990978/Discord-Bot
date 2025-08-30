@@ -1,4 +1,4 @@
 discord.py
 flask
-mcstatus==5.6.0
+from mcstatus.server import JavaServer
 
